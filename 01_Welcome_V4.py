@@ -1,5 +1,5 @@
 """Version 4
-This code is built off V3, now a funtion that will be a part of my finished code"""
+This code is built off V3, now a function that will be a part of my finished code"""
 import sys
 from tkinter import *
 
@@ -45,5 +45,6 @@ def welcome_screen():
     leave_b4 = Button(root, text="Exit", command=leave).pack()
 
     root.mainloop()
+
 
 welcome_screen()
