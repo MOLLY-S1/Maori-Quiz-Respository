@@ -1,14 +1,17 @@
 """Version 1
 This code will create a welcome screen for my quiz without using TKinter"""
 
+# Welcome banner
 print("Welcome to the Maori Quiz")
 
+# Options screen
 user_choice = input("Please enter an option:\n"
                     "1) Instructions\n"
                     "2) Start Quiz\n"
                     "3) Statistics\n"
                     "4) Exit\n")
 
+# Options uses
 if user_choice == "1":
     print("Instructions")
 
