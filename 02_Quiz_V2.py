@@ -27,7 +27,7 @@ n2 = random.choice(num_list)
 while n2 == questions[question] or n2 == n1:
     n2 = random.choice(num_list)
 
-# List to add posible answers to
+# List to add possible answers to
 answers = [n1, n2, questions[question]]
 
 # Produce random answer order
@@ -45,10 +45,7 @@ a3 = random.choice(answers)
 while a3 == a1 or a3 == a2:
     a3 = random.choice(answers)
 
-
-
 print(f"What is the English word for {question}?\n"
       f"Is it {a1}\n"
       f"Is it {a2}\n"
       f"Or is it {a3}")
-
