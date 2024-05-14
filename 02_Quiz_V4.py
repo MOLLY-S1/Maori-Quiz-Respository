@@ -5,6 +5,7 @@ question is only asked once"""
 import random
 
 
+# Class to store questions
 class Questions:
     def __init__(self, subject, question, answer, multi_choice_list):
         self.subject = subject
@@ -40,8 +41,6 @@ Questions("Colours", 'Waiporoporo', "Purple", "colour_list")
 Questions("Colours", 'Parauri', "Brown", "colour_list")
 Questions("Colours", "Kiwikiwi", "Grey", "colour_list")
 
-
-
 # List of numbers
 num_list = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
 colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
@@ -61,6 +60,7 @@ for key in questions[enter]:
         qlist = num_list
     else:
         qlist = colour_list
+
 
     # get two random numbers
     n1 = random.choice(qlist)

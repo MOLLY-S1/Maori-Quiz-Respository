@@ -47,75 +47,143 @@ num_list = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nin
 colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
 
-# Quiz selection
-pick = Label(root, text="Please choose a quiz to play: ")
-pick.pack(side=TOP)
+
 
 # Buttons
 enter = ""
 
+def play():
+    count = 0
+
+    d1 = list(questions[enter].items())
+    random.shuffle(d1)
+    questions[enter] = dict(d1)
+
+    # Get random question
+    for key in questions[enter]:
+        count +=1
+        root.title = f"Question {count}"
+        question = key
+
+        if enter == "Numbers":
+            qlist = num_list
+        else:
+            qlist = colour_list
+
+        # get two random numbers
+        n1 = random.choice(qlist)
+
+        # Ensure n1 != the answer
+        while n1 == questions[enter][question]:
+            n1 = random.choice(qlist)
+
+        n2 = random.choice(qlist)
+
+        # Ensure n2 != the answer or n1
+        while n2 == questions[enter][question] or n2 == n1:
+            n2 = random.choice(qlist)
+
+        # List to add possible answers to
+        answers = [n1, n2, questions[enter][question]]
+
+        # Produce random answer order
+        a1 = random.choice(answers)
+
+        a2 = random.choice(answers)
+
+        # Ensure a2 != a1
+        while a2 == a1:
+            a2 = random.choice(answers)
+
+        a3 = random.choice(answers)
+
+        # Ensure a3 != a1 or a2
+        while a3 == a1 or a3 == a2:
+            a3 = random.choice(answers)
+
+        Label(root, text=f"What is the English word for {question}?").pack(side=TOP)
+        b1 = Button(root, text=f"{a1}").pack(side=TOP)
+        b2 = Button(root, text=f"{a2}").pack(side= TOP)
+        b3 = Button(root, text=f"{a3}").pack(side=TOP)
+        root.mainloop()
 
 def colour():
     global enter
-    enter = "Colour"
+    enter = "Colours"
+    add_window.destroy()
+    play()
 
 
 def number():
     global enter
-    enter = "Number"
+    enter = "Numbers"
+    add_window.destroy()
+    play()
 
-
-b1_colour = Button(root, text="Colours", command=colour)
-b2_number = Button(root, text="Numbers", command=number)
+# Quiz selection
+add_window = Toplevel(root)
+add_window.title = "QUIZ OPTIONS"
+pick = Label(add_window, text="Please choose a quiz to play: ")
+pick.pack(side=TOP)
+b1_colour = Button(add_window, text="Colours", command=colour)
+if b1_colour == True:
+    enter = "Colours"
+    print(enter)
+b2_number = Button(add_window, text="Numbers", command=number)
 b1_colour.pack(side=LEFT)
 b2_number.pack(side=RIGHT)
-mainloop()
+add_window.mainloop()
 print(enter)
 
-d1 = list(questions[enter].items())
-random.shuffle(d1)
-questions[enter] = dict(d1)
+def play():
+    d1 = list(questions[enter].items())
+    random.shuffle(d1)
+    questions[enter] = dict(d1)
 
-# Get random question
-for key in questions[enter]:
-    question = key
+    # Get random question
+    for key in questions[enter]:
+        question = key
 
-    if enter == "Numbers":
-        qlist = num_list
-    else:
-        qlist = colour_list
+        if enter == "Numbers":
+            qlist = num_list
+        else:
+            qlist = colour_list
 
-    # get two random numbers
-    n1 = random.choice(qlist)
-
-    # Ensure n1 != the answer
-    while n1 == questions[enter][question]:
+        # get two random numbers
         n1 = random.choice(qlist)
 
-    n2 = random.choice(qlist)
+        # Ensure n1 != the answer
+        while n1 == questions[enter][question]:
+            n1 = random.choice(qlist)
 
-    # Ensure n2 != the answer or n1
-    while n2 == questions[enter][question] or n2 == n1:
         n2 = random.choice(qlist)
 
-    # List to add possible answers to
-    answers = [n1, n2, questions[enter][question]]
+        # Ensure n2 != the answer or n1
+        while n2 == questions[enter][question] or n2 == n1:
+            n2 = random.choice(qlist)
 
-    # Produce random answer order
-    a1 = random.choice(answers)
+        # List to add possible answers to
+        answers = [n1, n2, questions[enter][question]]
 
-    a2 = random.choice(answers)
+        # Produce random answer order
+        a1 = random.choice(answers)
 
-    # Ensure a2 != a1
-    while a2 == a1:
         a2 = random.choice(answers)
 
-    a3 = random.choice(answers)
+        # Ensure a2 != a1
+        while a2 == a1:
+            a2 = random.choice(answers)
 
-    # Ensure a3 != a1 or a2
-    while a3 == a1 or a3 == a2:
         a3 = random.choice(answers)
 
-    Label(root, text=f"What is the English word for {question}?").pack(side=TOP)
-    b1 = Button(root, text={a1}).pack(side=LEFT)
+        # Ensure a3 != a1 or a2
+        while a3 == a1 or a3 == a2:
+            a3 = random.choice(answers)
+
+        Label(root, text=f"What is the English word for {question}?").pack(side=TOP)
+        b1 = Button(root, text=f"{a1}").pack(side=LEFT)
+        b2 = Button(root, text=f"{a2}").pack()
+        b3 = Button(root, text=f"{a3}").pack(side=RIGHT)
+        root.mainloop()
+
 
