@@ -1,8 +1,10 @@
-""" Version 4
-More adaptable for multiple quiz's and the generating questions has been fixed so that each
-question is only asked once"""
+""" Version 5
+Now using tkinter """
 
 import random
+from tkinter import *
+
+root = Tk()
 
 
 class Questions:
@@ -40,14 +42,35 @@ Questions("Colours", 'Waiporoporo', "Purple", "colour_list")
 Questions("Colours", 'Parauri', "Brown", "colour_list")
 Questions("Colours", "Kiwikiwi", "Grey", "colour_list")
 
-
-
 # List of numbers
 num_list = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
 colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
 
-enter = input("Colours or Numbers? ")
+# Quiz selection
+pick = Label(root, text="Please choose a quiz to play: ")
+pick.pack(side=TOP)
+
+# Buttons
+enter = ""
+
+
+def colour():
+    global enter
+    enter = "Colour"
+
+
+def number():
+    global enter
+    enter = "Number"
+
+
+b1_colour = Button(root, text="Colours", command=colour)
+b2_number = Button(root, text="Numbers", command=number)
+b1_colour.pack(side=LEFT)
+b2_number.pack(side=RIGHT)
+mainloop()
+print(enter)
 
 d1 = list(questions[enter].items())
 random.shuffle(d1)
@@ -93,7 +116,6 @@ for key in questions[enter]:
     while a3 == a1 or a3 == a2:
         a3 = random.choice(answers)
 
-    print(f"What is the English word for {question}?\n"
-          f"Is it {a1}\n"
-          f"Is it {a2}\n"
-          f"Or is it {a3}")
+    Label(root, text=f"What is the English word for {question}?").pack(side=TOP)
+    b1 = Button(root, text={a1}).pack(side=LEFT)
+

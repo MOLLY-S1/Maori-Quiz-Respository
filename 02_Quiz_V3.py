@@ -1,5 +1,5 @@
 """ Version 3
-Questions now stored in class 'Questions' and are randomly chosen through the whole list"""
+Questions now stored in class 'Questions'"""
 
 import random
 
