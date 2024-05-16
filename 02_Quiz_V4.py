@@ -61,7 +61,6 @@ for key in questions[enter]:
     else:
         qlist = colour_list
 
-
     # get two random numbers
     n1 = random.choice(qlist)
 
@@ -97,3 +96,4 @@ for key in questions[enter]:
           f"Is it {a1}\n"
           f"Is it {a2}\n"
           f"Or is it {a3}")
+

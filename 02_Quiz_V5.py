@@ -51,6 +51,9 @@ colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
 enter = ""
 
 
+
+
+
 def play():
     count = 0
 
@@ -60,8 +63,10 @@ def play():
 
     # Get random question
     for key in questions[enter]:
+        new_window = Toplevel(root)
+
         count += 1
-        root.title = f"Question {count}"
+        new_window.title = f"Question {count}"
         question = key
 
         if enter == "Numbers":
@@ -99,11 +104,30 @@ def play():
         while a3 == a1 or a3 == a2:
             a3 = random.choice(answers)
 
-        Label(root, text=f"What is the English word for {question}?").pack(side=TOP)
-        b1 = Button(root, text=f"{a1}").pack(side=TOP)
-        b2 = Button(root, text=f"{a2}").pack(side=TOP)
-        b3 = Button(root, text=f"{a3}").pack(side=TOP)
+        def buttons(clicked_answer):
+            answer_window = Toplevel(add_window)
+            if clicked_answer == questions[enter][question]:
+                Label(answer_window, text="CORRECT", fg="Green").pack(side=TOP)
+                Button(answer_window, text="Next Question", command=answer_window.destroy).pack(side=BOTTOM)
+            else:
+                Label(answer_window, text="INCORRECT", fg="Red").pack(side=TOP)
+                Button(answer_window, text="Next Question",command=answer_window.destroy).pack(side=BOTTOM)
+
+
+
+        Label(new_window, text=f"What is the English word for {question}?").pack(side=TOP)
+        b1 = Button(new_window, text=f"{a1}", command=buttons(a1)).pack(side=TOP)
+        b2 = Button(new_window, text=f"{a2}", command=buttons(a2)).pack(side=TOP)
+        b3 = Button(new_window, text=f"{a3}", command=buttons(a3)).pack(side=TOP)
+        new_window.mainloop()
+
+
+
+
+
+
         root.mainloop()
+
 
 
 def colour():
@@ -134,4 +158,3 @@ b2_number.pack(side=RIGHT)
 add_window.mainloop()
 
 
-print(enter)
