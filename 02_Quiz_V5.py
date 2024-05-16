@@ -48,85 +48,66 @@ colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
 
 enter = ""
+score = 0
 
 
+# Main quiz function
 def play():
+    global score
     global asked_questions
-    count = 0
-
     if len(asked_questions[enter]) == len(questions[enter]):
+        print(f"Your score is {score}/10")
         return
 
-    d1 = list(questions[enter].items())
-    random.shuffle(d1)
-    questions[enter] = dict(d1)
+    # Destroy previous question window if it exists
+    if hasattr(play, "question_window") and play.question_window:
+        play.question_window.destroy()
 
+    new_window = Toplevel(root)
 
+    # Ensure each question is only asked once
+    question = random.choice([key for key in questions[enter] if key not in asked_questions[enter]])
+    asked_questions[enter].append(question)
 
-    # Get random question
-    for key in questions[enter]:
-        if key not in asked_questions[enter]:
-            asked_questions[enter].append(key)
-            new_window = Toplevel(root)
+    new_window.title(f"What is the English word for {question}?")
 
-            count += 1
-            new_window.title = f"Question {count}"
-            question = key
+    # Select correct list for random questions
+    if enter == "Numbers":
+        qlist = num_list
+    else:
+        qlist = colour_list
 
-            if enter == "Numbers":
-                qlist = num_list
-            else:
-                qlist = colour_list
+    # Ensure each question is unique
+    n1 = random.choice(qlist)
+    while n1 == questions[enter][question]:
+        n1 = random.choice(qlist)
 
-            # get two random numbers
-            n1 = random.choice(qlist)
+    n2 = random.choice(qlist)
+    while n2 == questions[enter][question] or n2 == n1:
+        n2 = random.choice(qlist)
 
-            # Ensure n1 != the answer
-            while n1 == questions[enter][question]:
-                n1 = random.choice(qlist)
+    answers = [n1, n2, questions[enter][question]]
+    random.shuffle(answers)
 
-            n2 = random.choice(qlist)
+    # Buttons function
+    def buttons(clicked_answer):
+        answer_window = Toplevel(root)
+        if clicked_answer == questions[enter][question]:
+            Label(answer_window, text="CORRECT", fg="green").pack(side=TOP)
+            global score
+            score += 1
+        else:
+            Label(answer_window, text=f"INCORRECT\n The answer was {questions[enter][question]}", fg="red").pack(
+                side=TOP)
+        Button(answer_window, text="Next Question", command=lambda: [answer_window.destroy(), play()]).pack(side=BOTTOM)
 
-            # Ensure n2 != the answer or n1
-            while n2 == questions[enter][question] or n2 == n1:
-                n2 = random.choice(qlist)
+    # Question Screen
+    Label(new_window, text=f"What is the English word for {question}?").pack(side=TOP)
+    # Make a button for each possible answer
+    for answer in answers:
+        Button(new_window, text=f"{answer}", command=lambda answer=answer: buttons(answer)).pack(side=TOP)
 
-            # List to add possible answers to
-            answers = [n1, n2, questions[enter][question]]
-
-            # Produce random answer order
-            a1 = random.choice(answers)
-            a2 = random.choice(answers)
-
-            # Ensure a2 != a1
-            while a2 == a1:
-                a2 = random.choice(answers)
-
-            a3 = random.choice(answers)
-
-            # Ensure a3 != a1 or a2
-            while a3 == a1 or a3 == a2:
-                a3 = random.choice(answers)
-
-            def buttons(clicked_answer):
-                answer_window = Toplevel(root)
-                if clicked_answer == questions[enter][question]:
-                    Label(answer_window, text="CORRECT", fg="green").pack(side=TOP)
-                else:
-                    Label(answer_window, text="INCORRECT", fg="red").pack(side=TOP)
-                Button(answer_window, text="Next Question", command=lambda: [answer_window.destroy(), play()]).pack(
-                    side=BOTTOM)
-
-            Label(new_window, text=f"What is the English word for {question}?").pack(side=TOP)
-            Button(new_window, text=f"{a1}", command=lambda: buttons(a1)).pack(side=TOP)
-            Button(new_window, text=f"{a2}", command=lambda: buttons(a2)).pack(side=TOP)
-            Button(new_window, text=f"{a3}", command=lambda: buttons(a3)).pack(side=TOP)
-
-            new_window.mainloop()
-
-
-
-
+    play.question_window = new_window
 
 
 def colour():
@@ -156,4 +137,5 @@ b2_number.pack(side=RIGHT)
 
 asked_questions = {"Colours": [], "Numbers": []}  # Track asked questions
 
+print(f"Your score is {score}/10")
 root.mainloop()
