@@ -7,6 +7,7 @@ from tkinter import *
 root = Tk()
 
 
+# Class for questions, including questions, answer and subject
 class Questions:
     def __init__(self, subject, question, answer, multi_choice_list):
         self.subject = subject
@@ -42,7 +43,7 @@ Questions("Colours", 'Waiporoporo', "Purple", "colour_list")
 Questions("Colours", 'Parauri', "Brown", "colour_list")
 Questions("Colours", "Kiwikiwi", "Grey", "colour_list")
 
-# List of numbers
+# List of numbers and colours for multi-choice
 num_list = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
 colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
@@ -51,17 +52,18 @@ colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
 def quiz():
     enter = ""
     score = 0
+    asked_questions = []
 
     # Main quiz function
     def play():
-        global score
-        global asked_questions
+        nonlocal score
+        nonlocal asked_questions
         if len(asked_questions[enter]) == len(questions[enter]):
             new_window = Toplevel(root)
             Label(new_window, text=f"Your score is {score}/10")
             return
 
-        # Destroy previous question window if it exists
+        # Destroy previous question window
         if hasattr(play, "question_window") and play.question_window:
             play.question_window.destroy()
 
@@ -70,8 +72,6 @@ def quiz():
         # Ensure each question is only asked once
         question = random.choice([key for key in questions[enter] if key not in asked_questions[enter]])
         asked_questions[enter].append(question)
-
-        new_window.title(f"What is the English word for {question}?")
 
         # Select correct list for random questions
         if enter == "Numbers":
@@ -96,7 +96,7 @@ def quiz():
             answer_window = Toplevel(root)
             if clicked_answer == questions[enter][question]:
                 Label(answer_window, text="CORRECT", fg="green").pack(side=TOP)
-                global score
+                nonlocal score
                 score += 1
             else:
                 Label(answer_window, text=f"INCORRECT\n The answer was {questions[enter][question]}", fg="red").pack(
@@ -113,13 +113,13 @@ def quiz():
         play.question_window = new_window
 
     def colour():
-        global enter
+        nonlocal enter
         enter = "Colours"
         add_window.destroy()
         play()
 
     def number():
-        global enter
+        nonlocal enter
         enter = "Numbers"
         add_window.destroy()
         play()
@@ -138,6 +138,7 @@ def quiz():
     asked_questions = {"Colours": [], "Numbers": []}  # Track asked questions
 
     root.mainloop()
+
 
 # Main Routine
 quiz()
