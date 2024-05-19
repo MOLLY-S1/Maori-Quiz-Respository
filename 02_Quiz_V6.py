@@ -59,9 +59,11 @@ def quiz():
         nonlocal score
         nonlocal asked_questions
         if len(asked_questions[enter]) == len(questions[enter]):
+            play.question_window.destroy()
             new_window = Toplevel(root)
-            Label(new_window, text=f"Your score is {score}/10")
-            return
+            Label(new_window, text=f"Your score is {score}/10", fg="Black").pack()
+            Button(new_window, text="Exit", command=lambda: exit()).pack()
+            return score
 
         # Destroy previous question window
         if hasattr(play, "question_window") and play.question_window:
