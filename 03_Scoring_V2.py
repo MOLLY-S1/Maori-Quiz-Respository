@@ -5,12 +5,16 @@ Trial 2, adds names to a file and reads off the file."""
 scoreboard = {}
 
 
-# Class to store scores
+# Class to store scores from file
 class Score:
     def __init__(self, name, score):
         self.name = name
-        self.score = f"{score}/10"
-        scoreboard[name] = score
+        print(name)
+        self.score = score
+        print(score)
+        scoreboard[name] = f"{score}/10"
+
+
 
 
 # Read off file
