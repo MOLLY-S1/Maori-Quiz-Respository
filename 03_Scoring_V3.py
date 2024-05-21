@@ -1,5 +1,7 @@
-""" Version 2
-Trial 2, adds names to a file and reads off the file."""
+""" Version 3
+Now gets new name and score and adds it to the file"""
+
+import random
 
 # Dictionary to store scores
 scoreboard = {}
@@ -24,4 +26,19 @@ def generate_scoreboard():
 
 # MAIN ROUTINE
 generate_scoreboard()
+
+# Get name and score
+score = random.randint(1, 10)
+name = input("Enter Name:")
+
+# Write on existing file
+file = open('Scoreboard.csv', 'a')
+file.write(f"{name}, {score}")
+file.close()
+
 print(scoreboard)
+
+
+
+
+
