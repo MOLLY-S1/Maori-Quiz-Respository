@@ -9,12 +9,8 @@ scoreboard = {}
 class Score:
     def __init__(self, name, score):
         self.name = name
-        print(name)
         self.score = score
-        print(score)
         scoreboard[name] = f"{score}/10"
-
-
 
 
 # Read off file
@@ -26,4 +22,5 @@ def generate_scoreboard():
             Score(line[0], line[1])
 
 
+generate_scoreboard()
 print(scoreboard)
