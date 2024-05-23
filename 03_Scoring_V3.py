@@ -1,5 +1,5 @@
 """ Version 3
-Now gets new name and score and adds it to the file, then prints the scoreboard"""
+Now gets new name and score and adds it to the file, then prints the scoreboard in order"""
 
 import random
 
@@ -31,13 +31,11 @@ name = input("Enter Name:")
 
 # Write on existing file
 file = open('Scoreboard.csv', 'a')
-file.write(f"{name}, {score}")
+file.write(f"{name}, {score}\n")
 file.close()
-
 generate_scoreboard()
+
+# Sorting scoreboard
+sorted_scores = sorted(scoreboard.items(), key=lambda x: x[1], reverse=True)
+scoreboard = dict(sorted_scores)
 print(scoreboard)
-
-
-
-
-
