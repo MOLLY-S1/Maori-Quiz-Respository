@@ -1,5 +1,5 @@
 """ Version 3
-Now gets new name and score and adds it to the file"""
+Now gets new name and score and adds it to the file, then prints the scoreboard"""
 
 import random
 
@@ -25,8 +25,6 @@ def generate_scoreboard():
 
 
 # MAIN ROUTINE
-generate_scoreboard()
-
 # Get name and score
 score = random.randint(1, 10)
 name = input("Enter Name:")
@@ -36,6 +34,7 @@ file = open('Scoreboard.csv', 'a')
 file.write(f"{name}, {score}")
 file.close()
 
+generate_scoreboard()
 print(scoreboard)
 
 
