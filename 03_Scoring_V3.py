@@ -26,16 +26,16 @@ def generate_scoreboard():
 
 # MAIN ROUTINE
 # Get name and score
-score = random.randint(1, 10)
-name = input("Enter Name:")
+get_score = random.randint(1, 10)
+get_name = input("Enter Name:")
 
 # Write on existing file
 file = open('Scoreboard.csv', 'a')
-file.write(f"{name}, {score}\n")
+file.write(f"{get_name}, {get_score}\n")
 file.close()
 generate_scoreboard()
 
 # Sorting scoreboard
-sorted_scores = sorted(scoreboard.items(), key=lambda x: x[1], reverse=True)
+sorted_scores = sorted(scoreboard.items(), key=lambda x: int(x[1].split('/')[0]), reverse=True)
 scoreboard = dict(sorted_scores)
 print(scoreboard)
