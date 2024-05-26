@@ -55,22 +55,38 @@ def instructions():
     print("Instructions")
 
 
+score = 0
+name = ""
+
 # Start Quiz option
 def quiz():
     enter = ""
-    score = 0
+    global score
     asked_questions = []
 
     # Main quiz function
     def play():
-        nonlocal score
+        global score
         nonlocal asked_questions
+        # Exiting at end of quiz
         if len(asked_questions[enter]) == len(questions[enter]):
             play.question_window.destroy()
+
+            # Show player score
             new_window = Toplevel(root)
             Label(new_window, text=f"Your score is {score}/10", fg="Black").pack()
-            Button(new_window, text="Exit", command=exit(play)).pack()
 
+            # Get name
+            name_entry = Entry(new_window)
+            name_entry.pack()
+
+            def exit_play():
+                global name
+                name = name_entry.get()  # Retrieve the name from the Entry widget
+                new_window.destroy()
+                exit()
+
+            Button(new_window, text="Exit", command=handle_exit).pack()
 
 
         # Destroy previous question window
@@ -106,7 +122,7 @@ def quiz():
             answer_window = Toplevel(root)
             if clicked_answer == questions[enter][question]:
                 Label(answer_window, text="CORRECT", fg="green").pack(side=TOP)
-                nonlocal score
+                global score
                 score += 1
             else:
                 Label(answer_window, text=f"INCORRECT\n The answer was {questions[enter][question]}", fg="red").pack(
@@ -152,7 +168,53 @@ def quiz():
 
 # Stats option
 def statistics():
-    print("Statistics")
+    # Dictionary to store scores
+    scoreboard = {}
+
+    def scoring():
+        nonlocal scoreboard
+
+        # Class to store scores from file
+        class Score:
+            def __init__(self, name, score):
+                self.name = name
+                self.score = score
+                scoreboard[name] = f"{score}/10"
+
+        # Read off file
+        def generate_scoreboard():
+            import csv
+            with open('Scoreboard1.csv~', newline='') as csvfile:
+                filereader = csv.reader(csvfile, delimiter=',', quotechar="'")
+                for line in filereader:
+                    Score(line[0], line[1])
+
+        # MAIN ROUTINE
+        # Get name and score
+        global score
+        get_score = score
+        get_name = input("Enter Name:")
+
+        # Write on existing file
+        file = open('Scoreboard1.csv~', 'a')
+        file.write(f"{get_name}, {get_score}\n")
+        file.close()
+        generate_scoreboard()
+
+        new_window = Toplevel(root)
+
+        # Sorting scoreboard
+        sorted_scores = sorted(scoreboard.items(), key=lambda x: int(x[1].split('/')[0]), reverse=True)
+        scoreboard = dict(sorted_scores)
+
+        Label(new_window, text="SCOREBOARD", fg="Black", font=("Times", 20, "bold")).pack()
+        place = 1
+        for key, value in sorted_scores:
+            Label(new_window, text=f"{place}. {key}: {value}").pack(side=TOP)
+            place += 1
+        root.mainloop()
+
+    scoring()
 
 
 # Leave program option
