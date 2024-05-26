@@ -21,7 +21,7 @@ class Score:
 # Read off file
 def generate_scoreboard():
     import csv
-    with open('Scoreboard.csv', newline='') as csvfile:
+    with open('Scoreboard1.csv', newline='') as csvfile:
         filereader = csv.reader(csvfile, delimiter=',', quotechar="'")
         for line in filereader:
             Score(line[0], line[1])
@@ -33,7 +33,7 @@ get_score = random.randint(1, 10)
 get_name = input("Enter Name:")
 
 # Write on existing file
-file = open('Scoreboard.csv', 'a')
+file = open('Scoreboard1.csv', 'a')
 file.write(f"{get_name}, {get_score}\n")
 file.close()
 generate_scoreboard()
