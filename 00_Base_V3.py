@@ -84,9 +84,9 @@ def quiz():
                 global name
                 name = name_entry.get()  # Retrieve the name from the Entry widget
                 new_window.destroy()
-                exit()
+                exit(play)
 
-            Button(new_window, text="Exit", command=handle_exit).pack()
+            Button(new_window, text="Exit", command=exit_play).pack()
 
 
         # Destroy previous question window
