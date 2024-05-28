@@ -1,10 +1,11 @@
-"""Version 1, Blank Checker
-This Component ensures all boxes are answered"""
+"""Version 2, Blank Checker
+Now a function and looping fixed"""
 from tkinter import *
 
 root = Tk()
 
-
+# Add top layer to root
+new_window = Toplevel(root)
 
 enter = ""
 
@@ -24,17 +25,18 @@ def check(entry, window):
         print("Program Continues")
 
 
+def entering():
+    global enter
+    # Add top layer to root
+    new_window = Toplevel(root)
+    # User input
+    Label(new_window, text="Enter name below:").pack(side=TOP)
+    entry = Entry(new_window)
+    entry.pack(side=TOP)
+    enter = entry.get()
+    Button(new_window, text="ENTER", command=lambda: check(entry, new_window)).pack(side=TOP)
 
-# Add top layer to root
-new_window = Toplevel(root)
 
-# User input
-Label(new_window, text="Enter name below:").pack(side=TOP)
-entry = Entry(new_window)
-entry.pack(side=TOP)
-enter = entry.get()
-Button(new_window, text="ENTER", command=lambda: check(entry, new_window)).pack(side=TOP)
-
-
-
+entering()
 root.mainloop()
+
