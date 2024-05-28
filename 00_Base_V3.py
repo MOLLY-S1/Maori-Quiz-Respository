@@ -1,4 +1,4 @@
-"""Version 2
+"""Version 3
 Base component to add all smaller components to, full code"""
 
 import sys
@@ -58,16 +58,19 @@ def instructions():
 score = 0
 name = ""
 
+
 # Start Quiz option
 def quiz():
     enter = ""
     global score
+    score = 0
     asked_questions = []
 
     # Main quiz function
     def play():
         global score
         nonlocal asked_questions
+
         # Exiting at end of quiz
         if len(asked_questions[enter]) == len(questions[enter]):
             play.question_window.destroy()
@@ -75,19 +78,22 @@ def quiz():
             # Show player score
             new_window = Toplevel(root)
             Label(new_window, text=f"Your score is {score}/10", fg="Black").pack()
+            Label(new_window, text="Name: ").pack()
 
             # Get name
             name_entry = Entry(new_window)
             name_entry.pack()
 
+            # Exit after name is entered
             def exit_play():
                 global name
                 name = name_entry.get()  # Retrieve the name from the Entry widget
+                # Add score and name to file
+                with open('Scoreboard1.csv~', 'a') as file:
+                    file.write(f"{name}, {score}\n")
                 new_window.destroy()
-                exit(play)
-
             Button(new_window, text="Exit", command=exit_play).pack()
-
+            return
 
         # Destroy previous question window
         if hasattr(play, "question_window") and play.question_window:
@@ -189,19 +195,11 @@ def statistics():
                 for line in filereader:
                     Score(line[0], line[1])
 
-        # MAIN ROUTINE
-        # Get name and score
-        global score
-        get_score = score
-        get_name = input("Enter Name:")
-
-        # Write on existing file
-        file = open('Scoreboard1.csv~', 'a')
-        file.write(f"{get_name}, {get_score}\n")
-        file.close()
-        generate_scoreboard()
-
+        # New window to show scoreboard
         new_window = Toplevel(root)
+
+        # Show current scores and add them to the board
+        generate_scoreboard()
 
         # Sorting scoreboard
         sorted_scores = sorted(scoreboard.items(), key=lambda x: int(x[1].split('/')[0]), reverse=True)
