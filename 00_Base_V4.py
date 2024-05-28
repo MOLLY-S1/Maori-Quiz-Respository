@@ -50,6 +50,21 @@ colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
 
 
+# Blank Checker function
+def check(entry, window):
+    # Continue looping until valid is entered
+    global enter
+    # Remove surrounding whitespace
+    enter = entry.get().strip()
+    if enter == "":
+        error_screen = Toplevel(root)
+        Label(error_screen, text="That was not a valid input, please enter your name").pack(side=TOP)
+        Button(error_screen, text="OK", command=error_screen.destroy).pack(side=TOP)
+    else:
+        window.destroy()
+        print("Program Continues")
+
+
 # Instructions option
 def instructions():
     print("Instructions")
@@ -92,7 +107,7 @@ def quiz():
                 with open('Scoreboard1.csv~', 'a') as file:
                     file.write(f"{name}, {score}\n")
                 new_window.destroy()
-            Button(new_window, text="Exit", command=exit_play).pack()
+            Button(new_window, text="Exit", command=lambda: check(name, new_window)).pack()
             return
 
         # Destroy previous question window
