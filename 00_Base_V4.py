@@ -1,4 +1,4 @@
-"""Version 3
+"""Version 4
 Base component to add all smaller components to, full code"""
 
 import sys
@@ -50,21 +50,6 @@ colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
 
 
-# Blank Checker function
-def check(entry, window):
-    # Continue looping until valid is entered
-    global enter
-    # Remove surrounding whitespace
-    enter = entry.get().strip()
-    if enter == "":
-        error_screen = Toplevel(root)
-        Label(error_screen, text="That was not a valid input, please enter your name").pack(side=TOP)
-        Button(error_screen, text="OK", command=error_screen.destroy).pack(side=TOP)
-    else:
-        window.destroy()
-        print("Program Continues")
-
-
 # Instructions option
 def instructions():
     print("Instructions")
@@ -86,6 +71,21 @@ def quiz():
         global score
         nonlocal asked_questions
 
+        # Blank Checker function
+        def check(entry, window):
+            # Continue looping until valid is entered
+            global enter
+            global name
+            # Remove surrounding whitespace
+            enter = entry.get().strip()
+            if enter == "":
+                error_screen = Toplevel(root)
+                Label(error_screen, text="That was not a valid input, please enter your name").pack(side=TOP)
+                Button(error_screen, text="OK", command=error_screen.destroy).pack(side=TOP)
+            else:
+                window.destroy()
+                exit_play()
+
         # Exiting at end of quiz
         if len(asked_questions[enter]) == len(questions[enter]):
             play.question_window.destroy()
@@ -101,13 +101,21 @@ def quiz():
 
             # Exit after name is entered
             def exit_play():
+                print("Working")
                 global name
-                name = name_entry.get()  # Retrieve the name from the Entry widget
-                # Add score and name to file
-                with open('Scoreboard1.csv~', 'a') as file:
-                    file.write(f"{name}, {score}\n")
-                new_window.destroy()
-            Button(new_window, text="Exit", command=lambda: check(name, new_window)).pack()
+                name = name_entry.get().strip()  # Retrieve the name from the Entry widget
+                if name:
+                    with open('Scoreboard1.csv~', 'a') as file:
+                        file.write(f"{name}, {score}\n")
+                    print("Working")
+                    new_window.destroy()
+                    statistics()
+                else:
+                    error_screen = Toplevel(root)
+                    Label(error_screen, text="Please enter your name before exiting.").pack(side=TOP)
+                    Button(error_screen, text="OK", command=error_screen.destroy).pack(side=TOP)
+
+            Button(new_window, text="Exit", command=lambda: check(name_entry, new_window)).pack()
             return
 
         # Destroy previous question window
@@ -185,6 +193,8 @@ def quiz():
     asked_questions = {"Colours": [], "Numbers": []}  # Track asked questions
 
     root.mainloop()
+
+
 
 
 # Stats option
