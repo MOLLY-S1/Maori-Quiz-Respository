@@ -9,7 +9,7 @@ new_window = Toplevel(root)
 
 enter = ""
 
-
+# Blank Checking function
 def check(entry, window):
     # Continue looping until valid is entered
     global enter
@@ -22,7 +22,7 @@ def check(entry, window):
         Button(error_screen, text="OK", command=error_screen.destroy).pack(side=TOP)
     else:
         window.destroy()
-        print("Program Continues")
+        return
 
 
 def entering():
