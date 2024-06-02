@@ -177,11 +177,14 @@ def quiz():
     root.mainloop()
 
 
+# Instructions Option
 def instructions():
     instructions_window = Toplevel(root)
+
     def start_quiz():
         instructions_window.destroy()
         quiz()
+
     Label(instructions_window, text="INSTRUCTIONS:\n"
                                     "When you press 'Start Quiz' you will be given two options for quiz "
                                     "type.\n"
