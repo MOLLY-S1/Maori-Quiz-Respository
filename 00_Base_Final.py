@@ -110,7 +110,7 @@ def quiz():
             play.question_window.destroy()
 
         new_window = Toplevel(root)
-        new_window.title = "QUIZ"
+        new_window.title("QUIZ")
 
         # Ensure each question is only asked once
         question = random.choice([key for key in questions[enter] if key not in asked_questions[enter]])
@@ -137,7 +137,7 @@ def quiz():
         # Buttons function
         def buttons(clicked_answer):
             answer_window = Toplevel(root)
-            answer_window.title = "ANSWER"
+            answer_window.title("ANSWER")
             if clicked_answer == questions[enter][question]:
                 Label(answer_window, text="CORRECT", fg="green").pack(side=TOP)
                 global score
@@ -189,7 +189,7 @@ def quiz():
 # Instructions Option
 def instructions():
     instructions_window = Toplevel(root)
-    instructions_window.title = "INSTRUCTIONS"
+    instructions_window.title("INSTRUCTIONS")
 
     # Starting the quiz
     def start_quiz():
@@ -236,7 +236,7 @@ def statistics():
 
         # New window to show scoreboard
         new_window = Toplevel(root)
-        new_window.title = "SCOREBOARD"
+        new_window.title("SCOREBOARD")
 
         # Show current scores and add them to the board
         generate_scoreboard()
@@ -250,6 +250,7 @@ def statistics():
         for key, value in sorted_scores:
             Label(new_window, text=f"{place}. {key}: {value}").pack(side=TOP)
             place += 1
+        Button(new_window, text="Exit", command=lambda: new_window.destroy()).pack(side=TOP)
         root.mainloop()
 
     scoring()
