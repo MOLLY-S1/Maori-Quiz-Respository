@@ -49,6 +49,9 @@ num_list = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nin
 colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
 
+# Defining global variable enter
+enter = ""
+
 
 # Blank Checking function
 def check(entry, window):
@@ -58,6 +61,7 @@ def check(entry, window):
     enter = entry.get().strip()
     if enter == "":
         error_screen = Toplevel(root)
+        error_screen.title = "ERROR"
         Label(error_screen, text="That was not a valid input, please enter your name").pack(side=TOP)
         Button(error_screen, text="OK", command=error_screen.destroy).pack(side=TOP)
     else:
@@ -68,6 +72,7 @@ def check(entry, window):
         return
 
 
+# Defining global variables score and name
 score = 0
 name = ""
 
@@ -105,6 +110,7 @@ def quiz():
             play.question_window.destroy()
 
         new_window = Toplevel(root)
+        new_window.title = "QUIZ"
 
         # Ensure each question is only asked once
         question = random.choice([key for key in questions[enter] if key not in asked_questions[enter]])
@@ -131,6 +137,7 @@ def quiz():
         # Buttons function
         def buttons(clicked_answer):
             answer_window = Toplevel(root)
+            answer_window.title = "ANSWER"
             if clicked_answer == questions[enter][question]:
                 Label(answer_window, text="CORRECT", fg="green").pack(side=TOP)
                 global score
@@ -149,12 +156,14 @@ def quiz():
 
         play.question_window = new_window
 
+    # For when colour option pressed
     def colour():
         nonlocal enter
         enter = "Colours"
         add_window.destroy()
         play()
 
+    # For when number option pressed
     def number():
         nonlocal enter
         enter = "Numbers"
@@ -180,7 +189,9 @@ def quiz():
 # Instructions Option
 def instructions():
     instructions_window = Toplevel(root)
+    instructions_window.title = "INSTRUCTIONS"
 
+    # Starting the quiz
     def start_quiz():
         instructions_window.destroy()
         quiz()
@@ -204,6 +215,7 @@ def statistics():
     # Dictionary to store scores
     scoreboard = {}
 
+    # Scoring function
     def scoring():
         nonlocal scoreboard
 
@@ -224,6 +236,7 @@ def statistics():
 
         # New window to show scoreboard
         new_window = Toplevel(root)
+        new_window.title = "SCOREBOARD"
 
         # Show current scores and add them to the board
         generate_scoreboard()
@@ -248,6 +261,7 @@ def leave():
     sys.exit()
 
 
+# Welcome Screen
 def welcome_screen():
     # Welcome Banner
     root.title("WELCOME")
@@ -268,5 +282,6 @@ def welcome_screen():
     root.mainloop()
 
 
+# MAIN ROUTINE
 welcome_screen()
 root.mainloop()
