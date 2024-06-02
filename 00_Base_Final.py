@@ -203,7 +203,7 @@ def instructions():
                                     "of your choice. "
                                     "Choose the correct answer. When all the questions have been "
                                     "answered your final score will be shown.\n"
-                                    "Enter you name then go to the 'Statistics' tab "
+                                    "Enter your name then go to the 'Statistics' tab "
                                     "in the home screen to see your name on the leaderboard!").pack(side=TOP)
     Button(instructions_window, text="Start Quiz", command=start_quiz).pack()
     Button(instructions_window, text="Return to Menu", command=lambda: instructions_window.destroy()).pack()
