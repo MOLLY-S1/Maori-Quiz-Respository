@@ -110,7 +110,7 @@ def quiz():
     # Main quiz function
     def play():
         nonlocal subject
-        nonlocal score
+        global score
         nonlocal asked_questions
 
         # Exiting at end of quiz
@@ -167,7 +167,7 @@ def quiz():
             answer_window.title("ANSWER")
             if clicked_answer == questions[subject][question]:
                 Label(answer_window, text="CORRECT", fg="green").pack(side=TOP)
-                nonlocal score
+                global score
                 score += 1
             else:
                 Label(answer_window,
