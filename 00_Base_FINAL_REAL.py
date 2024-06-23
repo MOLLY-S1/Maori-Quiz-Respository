@@ -70,14 +70,10 @@ num_list = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
 colour_list = ["White", "Red", "Orange", "Yellow", "Green", "Black",
                "Blue", "Purple", "Brown", "Grey"]
 
-# Defining global variable enter
-enter = ""
-
 
 # Blank Checking function
 def check(entry, window):
     # Continue looping until valid is entered
-    global enter
     # Remove surrounding whitespace
     enter = entry.get().strip()
     if enter == "":
@@ -256,10 +252,10 @@ def statistics():
 
         # Class to store scores from file
         class Score:
-            def __init__(self, name, score):
-                self.name = name
-                self.score = score
-                scoreboard[name] = f"{score}/10"
+            def __init__(self, entered_name, recorded_score):
+                self.entered_name = entered_name
+                self.recorded_score = recorded_score
+                scoreboard[entered_name] = f"{recorded_score}/10"
 
         # Read off file
         def generate_scoreboard():
